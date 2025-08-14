@@ -33,7 +33,10 @@ export default function Home() {
   // Grammar check mutation
   const grammarCheckMutation = useMutation({
     mutationFn: async (data: { text: string; language: string }) => {
-      const response = await apiRequest("POST", "/api/grammar/check", data);
+      const response = await apiRequest("POST", "/api/grammar/check", {
+        originalText: data.text,
+        language: data.language
+      });
       return response.json() as Promise<GrammarCheckResult>;
     },
     onSuccess: (result) => {
