@@ -37,7 +37,7 @@ export async function generateContent(request: ContentGenerationRequest): Promis
   
   switch (contentType) {
     case "grammar":
-      prompt = `Please correct the grammar, spelling, and punctuation in this text while maintaining the original meaning and tone:\n\n"${text}"`;
+      prompt = `Fix the grammar, spelling, and punctuation errors in this text and return ONLY the corrected version. Do not include any explanations, quotes, or additional text:\n\n${text}`;
       break;
       
     case "linkedin":
@@ -65,9 +65,23 @@ export async function generateContent(request: ContentGenerationRequest): Promis
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
+      config: contentType === "grammar" ? {
+        systemInstruction: "You are a grammar correction tool. Return only the corrected text with no explanations, quotes, or additional commentary.",
+      } : undefined,
     });
 
-    const generatedContent = response.text || "";
+    let generatedContent = response.text || "";
+    
+    // For grammar corrections, clean up any unwanted formatting
+    if (contentType === "grammar") {
+      generatedContent = generatedContent
+        .replace(/^Here's the corrected version:\s*/i, '')
+        .replace(/^Corrected:\s*/i, '')
+        .replace(/^The corrected text is:\s*/i, '')
+        .replace(/^"/, '')
+        .replace(/"$/, '')
+        .trim();
+    }
     
     return {
       generatedContent,

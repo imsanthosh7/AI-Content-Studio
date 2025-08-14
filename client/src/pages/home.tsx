@@ -10,7 +10,7 @@ export default function Home() {
   const [activeContentType, setActiveContentType] = useState<ContentType>("grammar");
   const [selectedMood, setSelectedMood] = useState<MoodType>("professional");
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>("linkedin");
-  const [language, setLanguage] = useState("en");
+  const language = "en";
   
   const { toast } = useToast();
 
@@ -128,13 +128,7 @@ export default function Home() {
     grateful: "🙏"
   };
 
-  const languageFlags = {
-    en: "🇺🇸",
-    es: "🇪🇸", 
-    fr: "🇫🇷",
-    de: "🇩🇪",
-    it: "🇮🇹"
-  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -155,25 +149,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            
-            {/* Language Selector */}
-            <div className="flex items-center space-x-2">
-              {Object.entries(languageFlags).map(([code, flag]) => (
-                <button
-                  key={code}
-                  onClick={() => setLanguage(code)}
-                  data-testid={`button-language-${code}`}
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl transition-all ${
-                    language === code 
-                      ? 'bg-blue-100 dark:bg-blue-900 ring-2 ring-blue-500' 
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-                  }`}
-                  title={code.toUpperCase()}
-                >
-                  {flag}
-                </button>
-              ))}
-            </div>
+
           </div>
         </div>
       </header>
@@ -188,7 +164,10 @@ export default function Home() {
             {Object.entries(contentTypeIcons).map(([type, icon]) => (
               <button
                 key={type}
-                onClick={() => setActiveContentType(type as ContentType)}
+                onClick={() => {
+                  setActiveContentType(type as ContentType);
+                  setOutputText(""); // Clear previous content when switching types
+                }}
                 data-testid={`button-content-${type}`}
                 className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center space-y-2 ${
                   activeContentType === type

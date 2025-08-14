@@ -85,5 +85,9 @@ Preferred communication style: Simple, everyday language.
 - **Zod**: Runtime type validation and schema definition
 - **Wouter**: Lightweight routing solution for React
 
-### Mobile Integration Preparation
-The application is designed to serve as the backend for an Android keyboard application, with API endpoints structured for mobile consumption and real-time grammar checking capabilities that can be integrated into keyboard input methods.
+### Content Generation Features
+- **Grammar Correction**: Clean, direct text correction without explanations
+- **Social Media Captions**: LinkedIn, Instagram, and Twitter content generation
+- **Comment Replies**: LinkedIn and Instagram comment response generation  
+- **Mood Settings**: Professional, casual, friendly, confident, enthusiastic, grateful tones
+- **Language Support**: Multi-language content generation with English as default
