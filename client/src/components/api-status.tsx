@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 
 interface ApiStatusResponse {
   status: string;
@@ -8,15 +7,13 @@ interface ApiStatusResponse {
 }
 
 export function ApiStatus() {
-  const [retryCount, setRetryCount] = useState(0);
 
   const { data: status, error, refetch, isLoading } = useQuery<ApiStatusResponse>({
-    queryKey: ["/api/status", retryCount],
+    queryKey: ["/api/status"],
     refetchInterval: 30000, // Check every 30 seconds
   });
 
   const handleRetry = () => {
-    setRetryCount(prev => prev + 1);
     refetch();
   };
 
