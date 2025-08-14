@@ -78,3 +78,30 @@ export interface GrammarCheckResult {
   stats: TextStats;
   grammarScore: number;
 }
+
+export type ContentType = "grammar" | "linkedin" | "instagram" | "twitter" | "comment-reply";
+export type MoodType = "professional" | "casual" | "friendly" | "confident" | "enthusiastic" | "grateful";
+export type Platform = "linkedin" | "instagram";
+
+export interface ContentGenerationRequest {
+  text: string;
+  contentType: ContentType;
+  platform?: Platform;
+  mood?: MoodType;
+  language?: string;
+}
+
+export interface ContentGenerationResult {
+  generatedContent: string;
+  contentType: ContentType;
+  platform?: Platform;
+  mood?: MoodType;
+}
+
+export const contentGenerationSchema = z.object({
+  text: z.string().min(1),
+  contentType: z.enum(["grammar", "linkedin", "instagram", "twitter", "comment-reply"]),
+  platform: z.enum(["linkedin", "instagram"]).optional(),
+  mood: z.enum(["professional", "casual", "friendly", "confident", "enthusiastic", "grateful"]).optional(),
+  language: z.string().default("en")
+});

@@ -1,0 +1,117 @@
+import { GoogleGenAI } from "@google/genai";
+import type { ContentGenerationRequest, ContentGenerationResult, ContentType, MoodType, Platform } from "@shared/schema";
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+
+const MOOD_DESCRIPTIONS = {
+  professional: "formal, business-appropriate tone",
+  casual: "relaxed, informal tone", 
+  friendly: "warm, approachable tone",
+  confident: "assertive, self-assured tone",
+  enthusiastic: "energetic, excited tone",
+  grateful: "appreciative, thankful tone"
+};
+
+const PLATFORM_GUIDELINES = {
+  linkedin: {
+    maxLength: 3000,
+    style: "Professional networking platform. Use hashtags strategically. Focus on career insights, industry news, professional achievements.",
+    format: "Can include line breaks, bullet points, and professional hashtags"
+  },
+  instagram: {
+    maxLength: 2200,
+    style: "Visual storytelling platform. Use engaging hashtags. Focus on lifestyle, behind-the-scenes, visual content.",
+    format: "Can include emojis, trending hashtags, and engaging captions"
+  },
+  twitter: {
+    maxLength: 280,
+    style: "Concise, engaging microblogging. Use trending hashtags. Be direct and impactful.",
+    format: "Must be under 280 characters. Include relevant hashtags and mentions"
+  }
+};
+
+export async function generateContent(request: ContentGenerationRequest): Promise<ContentGenerationResult> {
+  const { text, contentType, platform, mood, language = "en" } = request;
+
+  let prompt = "";
+  
+  switch (contentType) {
+    case "grammar":
+      prompt = `Please correct the grammar, spelling, and punctuation in this text while maintaining the original meaning and tone:\n\n"${text}"`;
+      break;
+      
+    case "linkedin":
+      prompt = generateSocialMediaPrompt(text, "linkedin", mood);
+      break;
+      
+    case "instagram":
+      prompt = generateSocialMediaPrompt(text, "instagram", mood);
+      break;
+      
+    case "twitter":
+      prompt = generateSocialMediaPrompt(text, "twitter", mood);
+      break;
+      
+    case "comment-reply":
+      if (!platform) throw new Error("Platform is required for comment replies");
+      prompt = generateCommentReplyPrompt(text, platform, mood);
+      break;
+      
+    default:
+      throw new Error(`Unsupported content type: ${contentType}`);
+  }
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
+
+    const generatedContent = response.text || "";
+    
+    return {
+      generatedContent,
+      contentType,
+      platform,
+      mood
+    };
+  } catch (error) {
+    console.error("Content generation error:", error);
+    throw new Error(`Failed to generate ${contentType} content: ${error instanceof Error ? error.message : "Unknown error"}`);
+  }
+}
+
+function generateSocialMediaPrompt(text: string, platform: keyof typeof PLATFORM_GUIDELINES, mood?: MoodType): string {
+  const guidelines = PLATFORM_GUIDELINES[platform];
+  const moodDesc = mood ? MOOD_DESCRIPTIONS[mood] : "natural, appropriate tone";
+  
+  return `Create a ${platform} caption based on this input text: "${text}"
+
+Platform Guidelines:
+- ${guidelines.style}
+- Maximum length: ${guidelines.maxLength} characters
+- Format: ${guidelines.format}
+
+Writing Style:
+- Use ${moodDesc}
+- Make it engaging and platform-appropriate
+- Include relevant hashtags for ${platform}
+- Ensure it's authentic and valuable to the audience
+
+Return only the final caption without any explanations or additional text.`;
+}
+
+function generateCommentReplyPrompt(text: string, platform: Platform, mood?: MoodType): string {
+  const moodDesc = mood ? MOOD_DESCRIPTIONS[mood] : "professional and helpful tone";
+  
+  return `Generate a thoughtful reply to this ${platform} comment: "${text}"
+
+Guidelines:
+- Use ${moodDesc}
+- Be authentic and engaging
+- Keep it concise but meaningful
+- Match the platform's communication style
+- Be respectful and add value to the conversation
+
+Return only the reply text without any explanations or additional formatting.`;
+}
