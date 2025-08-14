@@ -26,6 +26,11 @@ async function buildForVercel() {
     // Create vercel.json in dist for proper routing
     const vercelConfig = {
       version: 2,
+      functions: {
+        "server/index.ts": {
+          "runtime": "nodejs18.x"
+        }
+      },
       routes: [
         {
           src: "/api/(.*)",
@@ -33,7 +38,7 @@ async function buildForVercel() {
         },
         {
           src: "/(.*)",
-          dest: "/public/$1"
+          dest: "/public/index.html"
         }
       ]
     };
