@@ -138,20 +138,14 @@ export default function Home() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white">
-                {contentTypeIcons[activeContentType]}
+                {contentTypeIcons.grammar}
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  {activeContentType === "grammar" ? "GrammarFix" : 
-                   activeContentType === "linkedin" ? "LinkedIn Creator" :
-                   activeContentType === "instagram" ? "Instagram Creator" :
-                   activeContentType === "twitter" ? "Twitter Creator" :
-                   "Comment Reply Assistant"}
+                  AI Content Studio
                 </h1>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {activeContentType === "grammar" ? "AI-powered grammar correction" :
-                   activeContentType === "comment-reply" ? "Generate thoughtful replies" :
-                   "Create engaging social media content"}
+                  Grammar correction & social media content
                 </p>
               </div>
             </div>
@@ -171,9 +165,22 @@ export default function Home() {
               <button
                 key={type}
                 onClick={() => {
+                  const contentLabels = {
+                    grammar: "Grammar Correction",
+                    linkedin: "LinkedIn Caption Generator", 
+                    instagram: "Instagram Caption Generator",
+                    twitter: "Twitter Caption Generator",
+                    "comment-reply": "Comment Reply Generator"
+                  };
+                  
                   setActiveContentType(type as ContentType);
                   setInputText(""); // Clear input text when switching types
                   setOutputText(""); // Clear previous content when switching types
+                  
+                  toast({
+                    title: `Switched to ${contentLabels[type as ContentType]}`,
+                    description: "Input and output have been cleared",
+                  });
                 }}
                 data-testid={`button-content-${type}`}
                 className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center space-y-2 ${
