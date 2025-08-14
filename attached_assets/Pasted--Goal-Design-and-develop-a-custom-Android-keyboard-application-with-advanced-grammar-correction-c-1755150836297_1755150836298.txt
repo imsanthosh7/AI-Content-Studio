@@ -1,0 +1,50 @@
+## Goal
+Design and develop a custom Android keyboard application with advanced grammar correction capabilities using the Gemini Flash model, focusing on mobile platform support and comprehensive backend infrastructure.
+
+## Return Format
+1. Detailed architectural design document for the Android keyboard
+2. Technical specification for grammar correction integration
+3. Backend setup instructions with .env configuration
+4. Development roadmap and implementation milestones
+5. Potential challenges and mitigation strategies
+
+## Warnings
+- Ensure strict data privacy and security protocols
+- Handle multiple language grammar correction scenarios
+- Manage computational overhead of real-time grammar analysis
+- Address potential performance impacts on mobile devices
+- Implement robust error handling and fallback mechanisms
+- Consider user consent for text processing and storage
+
+## Context
+- Platform: Android mobile ecosystem
+- Core Technology: Gemini Flash AI model
+- Primary Features:
+  - Real-time grammar correction
+  - Seamless keyboard integration
+  - Lightweight mobile performance
+  - Secure backend infrastructure
+
+Specific Technical Requirements:
+- Implement keyboard layout customization
+- Develop grammar correction algorithm using Gemini Flash
+- Create secure .env configuration for backend services
+- Support multiple input languages
+- Minimize battery and processing resource consumption
+- Implement machine learning model for continuous improvement
+- Develop comprehensive user settings and preferences interface
+
+Development Approach:
+- Use Kotlin for Android native development
+- Implement modular architecture
+- Leverage Gemini Flash API for natural language processing
+- Design scalable microservices backend
+- Ensure GDPR and data protection compliance
+
+Recommended Technology Stack:
+- Frontend: Kotlin, Android SDK
+- Backend: Node.js, Express.js
+- AI Model: Gemini Flash
+- Database: Firebase/Firestore
+- Authentication: OAuth 2.0
+- Deployment: Google Cloud Platform
