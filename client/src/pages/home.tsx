@@ -186,7 +186,7 @@ export default function Home() {
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Choose Content Type
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
             {Object.entries(contentTypeIcons).map(([type, icon]) => (
               <button
                 key={type}
@@ -210,16 +210,16 @@ export default function Home() {
                   });
                 }}
                 data-testid={`button-content-${type}`}
-                className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center space-y-2 ${
+                className={`p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center space-y-2 ${
                   activeContentType === type
                     ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
                     : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
                 }`}
               >
-                <div className={activeContentType === type ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'}>
+                <div className={`flex-shrink-0 ${activeContentType === type ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'}`}>
                   {icon}
                 </div>
-                <span className="text-sm font-medium capitalize">
+                <span className="text-xs sm:text-sm font-medium capitalize text-center leading-tight">
                   {type === "comment-reply" ? "Reply" : type}
                 </span>
               </button>
@@ -235,20 +235,20 @@ export default function Home() {
               <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
                 Select Mood
               </h3>
-              <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
                 {Object.entries(moodEmojis).map(([mood, emoji]) => (
                   <button
                     key={mood}
                     onClick={() => setSelectedMood(mood as MoodType)}
                     data-testid={`button-mood-${mood}`}
-                    className={`p-3 rounded-lg border transition-all duration-200 flex flex-col items-center space-y-1 ${
+                    className={`p-2 sm:p-3 rounded-lg border transition-all duration-200 flex flex-col items-center space-y-1 ${
                       selectedMood === mood
                         ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30'
                         : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
                     }`}
                   >
-                    <span className="text-2xl">{emoji}</span>
-                    <span className="text-xs font-medium capitalize">{mood}</span>
+                    <span className="text-xl sm:text-2xl">{emoji}</span>
+                    <span className="text-xs font-medium capitalize truncate">{mood}</span>
                   </button>
                 ))}
               </div>
@@ -260,20 +260,24 @@ export default function Home() {
                 <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
                   Platform
                 </h3>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {(["linkedin", "instagram", "reddit"] as Platform[]).map((platform) => (
                     <button
                       key={platform}
                       onClick={() => setSelectedPlatform(platform)}
                       data-testid={`button-platform-${platform}`}
-                      className={`p-4 rounded-lg border transition-all duration-200 flex items-center justify-center space-x-3 ${
+                      className={`p-3 sm:p-4 rounded-lg border transition-all duration-200 flex items-center justify-center space-x-2 sm:space-x-3 ${
                         selectedPlatform === platform
                           ? 'border-green-500 bg-green-50 dark:bg-green-900/30'
                           : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800'
                       }`}
                     >
-                      {contentTypeIcons[platform]}
-                      <span className="font-medium capitalize">{platform}</span>
+                      <div className="flex-shrink-0">
+                        {contentTypeIcons[platform]}
+                      </div>
+                      <span className="text-sm sm:text-base font-medium capitalize">
+                        {platform}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -288,8 +292,8 @@ export default function Home() {
             <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
               Character Limit
             </h3>
-            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 dark:border-gray-700/50">
-              <div className="flex items-center justify-between mb-4">
+            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-200/50 dark:border-gray-700/50">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
                 <span className="text-sm text-gray-600 dark:text-gray-400">
                   Max: {platformCharLimits[activeContentType]} characters
                 </span>
@@ -315,10 +319,10 @@ export default function Home() {
         )}
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {/* Input Section */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Input Text
               </h2>
@@ -339,7 +343,7 @@ export default function Home() {
                     : "Describe your content idea or paste existing text to transform..."
                 }
                 data-testid="textarea-input"
-                className="w-full h-80 p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base leading-relaxed shadow-sm transition-all duration-200"
+                className="w-full h-60 sm:h-80 p-4 sm:p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base leading-relaxed shadow-sm transition-all duration-200"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               />
               
@@ -383,7 +387,7 @@ export default function Home() {
 
           {/* Output Section */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Generated Content
               </h2>
@@ -391,7 +395,7 @@ export default function Home() {
                 <button
                   onClick={() => copyToClipboard(outputText)}
                   data-testid="button-copy-output"
-                  className="flex items-center space-x-2 px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                  className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -404,7 +408,7 @@ export default function Home() {
             <div className="relative">
               <div 
                 data-testid="output-generated-content"
-                className="w-full h-80 p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl text-base leading-relaxed shadow-sm overflow-y-auto"
+                className="w-full h-60 sm:h-80 p-4 sm:p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl text-base leading-relaxed shadow-sm overflow-y-auto"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {outputText ? (
@@ -412,10 +416,10 @@ export default function Home() {
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500">
                     {contentTypeIcons[activeContentType]}
-                    <p className="text-center mt-4">
+                    <p className="text-center mt-4 text-sm sm:text-base">
                       Generated content will appear here
                       <br />
-                      <span className="text-sm opacity-75">
+                      <span className="text-xs sm:text-sm opacity-75">
                         {activeContentType === "grammar" ? "Enter text and click 'Correct Grammar'" : 
                          `Enter text and click 'Create ${activeContentType.charAt(0).toUpperCase() + activeContentType.slice(1)}'`}
                       </span>
@@ -444,11 +448,11 @@ export default function Home() {
       {/* Footer */}
       <footer className="mt-16 bg-white/50 dark:bg-gray-900/50 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
             <div className="text-sm text-gray-500 dark:text-gray-400">
               © 2025 AI Content Studio - Grammar correction & social content generation
             </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-center md:justify-start space-x-2 text-sm text-gray-500 dark:text-gray-400">
               <span>Powered by</span>
               <div className="flex items-center space-x-1">
                 <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-sm"></div>
