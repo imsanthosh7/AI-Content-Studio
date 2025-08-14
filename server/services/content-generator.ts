@@ -1,7 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import type { ContentGenerationRequest, ContentGenerationResult, ContentType, MoodType, Platform } from "@shared/schema";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const apiKey = process.env.GEMINI_API_KEY || "";
+const ai = new GoogleGenAI({ apiKey });
 
 const MOOD_DESCRIPTIONS = {
   professional: "formal, business-appropriate tone",
