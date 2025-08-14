@@ -1,0 +1,10 @@
+node_modules
+.git
+.local
+attached_assets
+*.log
+.env.local
+.env.development
+.env.test
+replit.md
+.replit 
