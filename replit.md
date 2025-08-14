@@ -1,8 +1,8 @@
-# Grammar Keyboard Application
+# GrammarFix - AI Grammar Correction Application
 
 ## Overview
 
-This is a full-stack web application designed to serve as the backend infrastructure for a custom Android keyboard with advanced grammar correction capabilities. The application features a React-based dashboard for testing and managing grammar correction services powered by Google's Gemini Flash AI model. The system is built with a modern TypeScript stack using React, Express.js, and PostgreSQL, with a focus on real-time grammar analysis, user preferences management, and comprehensive correction history tracking.
+A clean, modern web application for AI-powered grammar correction using Google's Gemini Flash model. The app features a simple two-panel interface where users input text with errors on the left and receive corrected text on the right. Built with React, TypeScript, and Express.js, focusing on simplicity and user experience with modern UI/UX design principles.
 
 ## User Preferences
 
@@ -12,11 +12,11 @@ Preferred communication style: Simple, everyday language.
 
 ### Frontend Architecture
 - **Framework**: React with TypeScript using Vite for build tooling
-- **UI Components**: Comprehensive component library built on Radix UI primitives with shadcn/ui styling
-- **Styling**: Tailwind CSS with CSS variables for theming and dark mode support
-- **State Management**: TanStack Query for server state management and caching
-- **Routing**: Wouter for lightweight client-side routing
-- **Forms**: React Hook Form with Zod validation for type-safe form handling
+- **UI Design**: Modern, clean two-panel layout with gradient backgrounds and glass-morphism effects
+- **Styling**: Tailwind CSS with custom gradients, shadows, and responsive design
+- **State Management**: TanStack Query for server state management and React hooks for local state
+- **Features**: Copy to clipboard, text clearing, character counting, loading states
+- **Responsive Design**: Mobile-first approach with adaptive layouts for all screen sizes
 
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js framework
