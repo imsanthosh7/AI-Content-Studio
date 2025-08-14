@@ -137,15 +137,21 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                {contentTypeIcons.grammar}
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white">
+                {contentTypeIcons[activeContentType]}
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  AI Content Studio
+                  {activeContentType === "grammar" ? "GrammarFix" : 
+                   activeContentType === "linkedin" ? "LinkedIn Creator" :
+                   activeContentType === "instagram" ? "Instagram Creator" :
+                   activeContentType === "twitter" ? "Twitter Creator" :
+                   "Comment Reply Assistant"}
                 </h1>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Grammar correction & social media content
+                  {activeContentType === "grammar" ? "AI-powered grammar correction" :
+                   activeContentType === "comment-reply" ? "Generate thoughtful replies" :
+                   "Create engaging social media content"}
                 </p>
               </div>
             </div>
@@ -166,6 +172,7 @@ export default function Home() {
                 key={type}
                 onClick={() => {
                   setActiveContentType(type as ContentType);
+                  setInputText(""); // Clear input text when switching types
                   setOutputText(""); // Clear previous content when switching types
                 }}
                 data-testid={`button-content-${type}`}
@@ -373,7 +380,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              © 2024 AI Content Studio - Grammar correction & social content generation
+              © 2025 AI Content Studio - Grammar correction & social content generation
             </div>
             <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
               <span>Powered by</span>
