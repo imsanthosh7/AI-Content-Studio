@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Slider } from "@/components/ui/slider";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -10,7 +13,23 @@ export default function Home() {
   const [activeContentType, setActiveContentType] = useState<ContentType>("grammar");
   const [selectedMood, setSelectedMood] = useState<MoodType>("professional");
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>("linkedin");
+  const [charLimit, setCharLimit] = useState<number>(5000);
   const language = "en";
+
+  // Character limits for different platforms
+  const platformCharLimits = {
+    grammar: 5000,
+    linkedin: 3000, 
+    instagram: 2200,
+    twitter: 280,
+    reddit: 40000,
+    "comment-reply": 500
+  };
+
+  // Initialize character limit on component mount
+  useEffect(() => {
+    setCharLimit(platformCharLimits[activeContentType]);
+  }, [activeContentType]);
   
   const { toast } = useToast();
 
@@ -33,6 +52,7 @@ export default function Home() {
         linkedin: "LinkedIn caption created", 
         instagram: "Instagram caption created",
         twitter: "Twitter caption created",
+        reddit: "Reddit caption created",
         "comment-reply": "Comment reply generated"
       };
       toast({
@@ -63,6 +83,7 @@ export default function Home() {
       text: inputText,
       contentType: activeContentType,
       language,
+      charLimit,
       ...(activeContentType === "comment-reply" && { platform: selectedPlatform }),
       ...(activeContentType !== "grammar" && { mood: selectedMood })
     };
@@ -110,6 +131,11 @@ export default function Home() {
     twitter: (
       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    ),
+    reddit: (
+      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
       </svg>
     ),
     "comment-reply": (
@@ -170,16 +196,17 @@ export default function Home() {
                     linkedin: "LinkedIn Caption Generator", 
                     instagram: "Instagram Caption Generator",
                     twitter: "Twitter Caption Generator",
+                    reddit: "Reddit Caption Generator",
                     "comment-reply": "Comment Reply Generator"
                   };
                   
                   setActiveContentType(type as ContentType);
                   setInputText(""); // Clear input text when switching types
                   setOutputText(""); // Clear previous content when switching types
+                  setCharLimit(platformCharLimits[type as ContentType]); // Update character limit
                   
                   toast({
                     title: `Switched to ${contentLabels[type as ContentType]}`,
-                    description: "Input and output have been cleared",
                   });
                 }}
                 data-testid={`button-content-${type}`}
@@ -233,8 +260,8 @@ export default function Home() {
                 <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
                   Platform
                 </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {(["linkedin", "instagram"] as Platform[]).map((platform) => (
+                <div className="grid grid-cols-3 gap-3">
+                  {(["linkedin", "instagram", "reddit"] as Platform[]).map((platform) => (
                     <button
                       key={platform}
                       onClick={() => setSelectedPlatform(platform)}
@@ -252,6 +279,38 @@ export default function Home() {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Character Limit Controller */}
+        {activeContentType !== "grammar" && (
+          <div className="mb-8">
+            <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
+              Character Limit
+            </h3>
+            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 dark:border-gray-700/50">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Max: {platformCharLimits[activeContentType]} characters
+                </span>
+                <span className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+                  {charLimit}
+                </span>
+              </div>
+              <Slider
+                value={[charLimit]}
+                onValueChange={(value) => setCharLimit(value[0])}
+                max={platformCharLimits[activeContentType]}
+                min={activeContentType === "twitter" ? 100 : 200}
+                step={activeContentType === "twitter" ? 10 : 50}
+                className="w-full"
+                data-testid="slider-char-limit"
+              />
+              <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <span>{activeContentType === "twitter" ? "100" : "200"}</span>
+                <span>{platformCharLimits[activeContentType]}</span>
+              </div>
+            </div>
           </div>
         )}
 

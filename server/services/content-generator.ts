@@ -27,11 +27,16 @@ const PLATFORM_GUIDELINES = {
     maxLength: 280,
     style: "Concise, engaging microblogging. Use trending hashtags. Be direct and impactful.",
     format: "Must be under 280 characters. Include relevant hashtags and mentions"
+  },
+  reddit: {
+    maxLength: 40000,
+    style: "Authentic, conversational community discussion. Use Reddit culture and terminology. Be genuine and add value.",
+    format: "Can include markdown formatting, links, and detailed explanations"
   }
 };
 
 export async function generateContent(request: ContentGenerationRequest): Promise<ContentGenerationResult> {
-  const { text, contentType, platform, mood, language = "en" } = request;
+  const { text, contentType, platform, mood, language = "en", charLimit } = request;
 
   let prompt = "";
   
@@ -41,15 +46,19 @@ export async function generateContent(request: ContentGenerationRequest): Promis
       break;
       
     case "linkedin":
-      prompt = generateSocialMediaPrompt(text, "linkedin", mood);
+      prompt = generateSocialMediaPrompt(text, "linkedin", mood, charLimit);
       break;
       
     case "instagram":
-      prompt = generateSocialMediaPrompt(text, "instagram", mood);
+      prompt = generateSocialMediaPrompt(text, "instagram", mood, charLimit);
       break;
       
     case "twitter":
-      prompt = generateSocialMediaPrompt(text, "twitter", mood);
+      prompt = generateSocialMediaPrompt(text, "twitter", mood, charLimit);
+      break;
+      
+    case "reddit":
+      prompt = generateSocialMediaPrompt(text, "reddit", mood, charLimit);
       break;
       
     case "comment-reply":
@@ -95,15 +104,16 @@ export async function generateContent(request: ContentGenerationRequest): Promis
   }
 }
 
-function generateSocialMediaPrompt(text: string, platform: keyof typeof PLATFORM_GUIDELINES, mood?: MoodType): string {
+function generateSocialMediaPrompt(text: string, platform: keyof typeof PLATFORM_GUIDELINES, mood?: MoodType, charLimit?: number): string {
   const guidelines = PLATFORM_GUIDELINES[platform];
   const moodDesc = mood ? MOOD_DESCRIPTIONS[mood] : "natural, appropriate tone";
+  const maxLength = charLimit || guidelines.maxLength;
   
   return `Create a ${platform} caption based on this input text: "${text}"
 
 Platform Guidelines:
 - ${guidelines.style}
-- Maximum length: ${guidelines.maxLength} characters
+- Maximum length: ${maxLength} characters
 - Format: ${guidelines.format}
 
 Writing Style:
@@ -111,6 +121,7 @@ Writing Style:
 - Make it engaging and platform-appropriate
 - Include relevant hashtags for ${platform}
 - Ensure it's authentic and valuable to the audience
+- Keep it under ${maxLength} characters
 
 Return only the final caption without any explanations or additional text.`;
 }
@@ -118,7 +129,11 @@ Return only the final caption without any explanations or additional text.`;
 function generateCommentReplyPrompt(text: string, platform: Platform, mood?: MoodType): string {
   const moodDesc = mood ? MOOD_DESCRIPTIONS[mood] : "professional and helpful tone";
   
-  return `Generate a thoughtful reply to this ${platform} comment: "${text}"
+  const platformContext = platform === "reddit" ? 
+    "Reddit comment or post" : 
+    `${platform} comment`;
+  
+  return `Generate a thoughtful reply to this ${platformContext}: "${text}"
 
 Guidelines:
 - Use ${moodDesc}
@@ -126,6 +141,7 @@ Guidelines:
 - Keep it concise but meaningful
 - Match the platform's communication style
 - Be respectful and add value to the conversation
+${platform === "reddit" ? "- Use Reddit's conversational style and terminology" : ""}
 
 Return only the reply text without any explanations or additional formatting.`;
 }

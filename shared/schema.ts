@@ -79,9 +79,9 @@ export interface GrammarCheckResult {
   grammarScore: number;
 }
 
-export type ContentType = "grammar" | "linkedin" | "instagram" | "twitter" | "comment-reply";
+export type ContentType = "grammar" | "linkedin" | "instagram" | "twitter" | "reddit" | "comment-reply";
 export type MoodType = "professional" | "casual" | "friendly" | "confident" | "enthusiastic" | "grateful";
-export type Platform = "linkedin" | "instagram";
+export type Platform = "linkedin" | "instagram" | "reddit";
 
 export interface ContentGenerationRequest {
   text: string;
@@ -89,6 +89,7 @@ export interface ContentGenerationRequest {
   platform?: Platform;
   mood?: MoodType;
   language?: string;
+  charLimit?: number;
 }
 
 export interface ContentGenerationResult {
@@ -100,8 +101,9 @@ export interface ContentGenerationResult {
 
 export const contentGenerationSchema = z.object({
   text: z.string().min(1),
-  contentType: z.enum(["grammar", "linkedin", "instagram", "twitter", "comment-reply"]),
-  platform: z.enum(["linkedin", "instagram"]).optional(),
+  contentType: z.enum(["grammar", "linkedin", "instagram", "twitter", "reddit", "comment-reply"]),
+  platform: z.enum(["linkedin", "instagram", "reddit"]).optional(),
   mood: z.enum(["professional", "casual", "friendly", "confident", "enthusiastic", "grateful"]).optional(),
-  language: z.string().default("en")
+  language: z.string().default("en"),
+  charLimit: z.number().optional()
 });
