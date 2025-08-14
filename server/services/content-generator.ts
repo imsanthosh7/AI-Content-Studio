@@ -29,7 +29,7 @@ const PLATFORM_GUIDELINES = {
     format: "Must be under 280 characters. Include relevant hashtags and mentions"
   },
   reddit: {
-    maxLength: 40000,
+    maxLength: 3500,
     style: "Authentic, conversational community discussion. Use Reddit culture and terminology. Be genuine and add value.",
     format: "Can include markdown formatting, links, and detailed explanations"
   }

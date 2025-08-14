@@ -22,7 +22,7 @@ export default function Home() {
     linkedin: 3000, 
     instagram: 2200,
     twitter: 280,
-    reddit: 40000,
+    reddit: 3500,
     "comment-reply": 500
   };
 
