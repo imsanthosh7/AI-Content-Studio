@@ -48,15 +48,17 @@ const PLATFORM_GUIDELINES = {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", "POST"); // <- This helps clients know allowed methods
-    return res.status(405).json({ message: "Method Not Allowed" });
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end(); // Preflight request
   }
 
-  if (!req.headers["content-type"]?.includes("application/json")) {
-    return res
-      .status(400)
-      .json({ message: "Content-Type must be application/json" });
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({ message: "Method Not Allowed" });
   }
 
   try {
