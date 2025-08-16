@@ -12,9 +12,9 @@ export function SuggestionsPanel({
   onIgnoreSuggestion 
 }: SuggestionsPanelProps) {
   return (
-    <div className="bg-surface rounded-xl shadow-sm border border-gray-200 mb-6">
-      <div className="border-b border-gray-200 px-6 py-4">
-        <h3 className="text-lg font-medium text-secondary">Suggestions</h3>
+    <div className="bg-surface dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+      <div className="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+        <h3 className="text-lg font-medium text-secondary dark:text-gray-200">Suggestions</h3>
       </div>
       <div className="p-6">
         {suggestions.length > 0 ? (
@@ -25,10 +25,10 @@ export function SuggestionsPanel({
                 data-testid={`suggestion-${suggestion.id}`}
                 className={`p-4 border rounded-lg ${
                   suggestion.severity === 'error' 
-                    ? 'border-error/20 bg-error/5' 
+                    ? 'border-error/20 dark:border-error/30 bg-error/5 dark:bg-error/10' 
                     : suggestion.severity === 'warning'
-                    ? 'border-warning/20 bg-warning/5'
-                    : 'border-gray-200 bg-gray-50'
+                    ? 'border-warning/20 dark:border-warning/30 bg-warning/5 dark:bg-warning/10'
+                    : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
                 }`}
               >
                 <div className="flex items-center space-x-2 mb-2">
@@ -44,19 +44,19 @@ export function SuggestionsPanel({
                       ? 'text-error'
                       : suggestion.severity === 'warning'
                       ? 'text-warning'
-                      : 'text-gray-700'
+                      : 'text-gray-700 dark:text-gray-300'
                   }`}>
                     {suggestion.type === 'grammar' ? 'Grammar Error' :
                      suggestion.type === 'style' ? 'Style Suggestion' :
                      'Spelling Error'}
                   </span>
                   {suggestion.confidence && (
-                    <span className="text-xs text-gray-400 ml-auto">
+                    <span className="text-xs text-gray-400 dark:text-gray-500 ml-auto">
                       {suggestion.confidence}% confidence
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-secondary mb-2">
+                <p className="text-sm text-secondary dark:text-gray-300 mb-2">
                   "<span className={`px-1 rounded ${
                     suggestion.severity === 'error' ? 'bg-error/20' : 'bg-warning/20'
                   }`}>
@@ -65,7 +65,7 @@ export function SuggestionsPanel({
                     {suggestion.suggested}
                   </span>"
                 </p>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
                   {suggestion.explanation}
                 </p>
                 <div className="flex space-x-2">
@@ -79,7 +79,7 @@ export function SuggestionsPanel({
                   <button 
                     onClick={() => onIgnoreSuggestion(suggestion.id)}
                     data-testid={`button-ignore-${suggestion.id}`}
-                    className="border border-gray-300 hover:bg-gray-50 text-secondary px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                    className="border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-secondary dark:text-gray-300 px-3 py-1.5 rounded text-xs font-medium transition-colors"
                   >
                     Ignore
                   </button>
@@ -90,7 +90,7 @@ export function SuggestionsPanel({
         ) : (
           <div data-testid="status-no-suggestions" className="text-center py-8">
             <i className="fas fa-check-circle text-success text-2xl mb-2"></i>
-            <p className="text-sm text-gray-500">No grammar issues found!</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">No grammar issues found!</p>
           </div>
         )}
       </div>

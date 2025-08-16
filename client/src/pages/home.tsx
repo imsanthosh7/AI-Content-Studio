@@ -187,7 +187,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#09090B]">
       <Nav />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Content Type Selector */}
@@ -195,7 +195,7 @@ export default function Home() {
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Choose Content Type
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
             {Object.entries(contentTypeIcons).map(([type, icon]) => (
               <button
                 key={type}
@@ -219,17 +219,17 @@ export default function Home() {
                   });
                 }}
                 data-testid={`button-content-${type}`}
-                className={`p-3 sm:p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center space-y-2 ${
+                className={`p-4 rounded-lg border transition-all duration-200 flex flex-col items-center space-y-2 ${
                   activeContentType === type
-                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
-                    : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border hover:border-border/80 bg-card shadow-sm hover:shadow-md"
                 }`}
               >
                 <div
                   className={`flex-shrink-0 ${
                     activeContentType === type
-                      ? "text-blue-600 dark:text-blue-400"
-                      : "text-gray-600 dark:text-gray-400"
+                      ? "text-primary-foreground"
+                      : "text-muted-foreground"
                   }`}
                 >
                   {icon}
@@ -256,10 +256,10 @@ export default function Home() {
                     key={mood}
                     onClick={() => setSelectedMood(mood as MoodType)}
                     data-testid={`button-mood-${mood}`}
-                    className={`p-2 sm:p-3 rounded-lg border transition-all duration-200 flex flex-col items-center space-y-1 ${
+                    className={`p-3 rounded-lg border transition-all duration-200 flex flex-col items-center space-y-1 ${
                       selectedMood === mood
-                        ? "border-purple-500 bg-purple-50 dark:bg-purple-900/30"
-                        : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800"
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border hover:border-border/80 bg-card shadow-sm hover:shadow-md"
                     }`}
                   >
                     <span className="text-xl sm:text-2xl">{emoji}</span>
@@ -286,8 +286,8 @@ export default function Home() {
                         data-testid={`button-platform-${platform}`}
                         className={`p-3 sm:p-4 rounded-lg border transition-all duration-200 flex items-center justify-center space-x-2 sm:space-x-3 ${
                           selectedPlatform === platform
-                            ? "border-green-500 bg-green-50 dark:bg-green-900/30"
-                            : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-800"
+                            ? "border-success bg-success/10"
+                            : "border-border hover:border-border/80 bg-card"
                         }`}
                       >
                         <div className="flex-shrink-0">
@@ -311,12 +311,12 @@ export default function Home() {
             <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">
               Character Limit
             </h3>
-            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-gray-200/50 dark:border-gray-700/50">
+            <div className="bg-card/70 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-border/50">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-sm text-muted-foreground">
                   Max: {platformCharLimits[activeContentType]} characters
                 </span>
-                <span className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+                <span className="text-lg font-semibold text-primary">
                   {charLimit}
                 </span>
               </div>
@@ -329,7 +329,7 @@ export default function Home() {
                 className="w-full cursor-grab active:cursor-grabbing"
                 data-testid="slider-char-limit"
               />
-              <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+              <div className="flex justify-between text-xs text-muted-foreground mt-2">
                 <span>{activeContentType === "twitter" ? "100" : "200"}</span>
                 <span>{platformCharLimits[activeContentType]}</span>
               </div>
@@ -345,7 +345,7 @@ export default function Home() {
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Input Text
               </h2>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-muted-foreground">
                 {inputText.length} characters
               </span>
             </div>
@@ -362,7 +362,7 @@ export default function Home() {
                     : "Describe your content idea or paste existing text to transform..."
                 }
                 data-testid="textarea-input"
-                className="w-full h-60 sm:h-80 p-4 sm:p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base leading-relaxed shadow-sm transition-all duration-200"
+                className="w-full h-60 sm:h-80 p-4 sm:p-6 bg-card border border-input rounded-2xl resize-none focus:ring-2 focus:ring-ring focus:border-transparent text-base leading-relaxed shadow-sm transition-all duration-200"
                 style={{ fontFamily: "Inter, sans-serif" }}
               />
 
@@ -370,7 +370,7 @@ export default function Home() {
                 <button
                   onClick={handleClear}
                   data-testid="button-clear-input"
-                  className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors"
                   title="Clear text"
                 >
                   <svg
@@ -394,11 +394,11 @@ export default function Home() {
               onClick={handleGenerate}
               disabled={generateMutation.isPending || !inputText.trim()}
               data-testid="button-generate"
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="w-full bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               {generateMutation.isPending ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <div className="animate-spin text-primary rounded-full h-5 w-5 border-b-2 border-white"></div>
                   <span>Generating...</span>
                 </>
               ) : (
@@ -422,14 +422,14 @@ export default function Home() {
           {/* Output Section */}
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-lg font-semibold text-foreground">
                 Generated Content
               </h2>
               {outputText && (
                 <button
                   onClick={() => copyToClipboard(outputText)}
                   data-testid="button-copy-output"
-                  className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-1.5 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                  className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-1.5 text-sm text-primary hover:text-primary-dark transition-colors"
                 >
                   <svg
                     className="w-4 h-4"
@@ -452,15 +452,15 @@ export default function Home() {
             <div className="relative">
               <div
                 data-testid="output-generated-content"
-                className="w-full h-60 sm:h-80 p-4 sm:p-6 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl text-base leading-relaxed shadow-sm overflow-y-auto"
+                className="w-full h-60 sm:h-80 p-4 sm:p-6 bg-card border border-input rounded-2xl text-base leading-relaxed shadow-sm overflow-y-auto"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 {outputText ? (
-                  <p className="text-gray-900 dark:text-white whitespace-pre-wrap">
+                  <p className="text-foreground whitespace-pre-wrap">
                     {outputText}
                   </p>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500">
+                  <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                     {contentTypeIcons[activeContentType]}
                     <p className="text-center mt-4 text-sm sm:text-base">
                       Generated content will appear here
@@ -483,7 +483,7 @@ export default function Home() {
               <button
                 onClick={() => setInputText(outputText)}
                 data-testid="button-use-output"
-                className="w-full bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm hover:shadow-md"
+                className="w-full bg-card hover:bg-accent border border-input text-foreground px-6 py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm hover:shadow-md"
               >
                 <svg
                   className="w-5 h-5"
@@ -506,17 +506,17 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 bg-white/50 dark:bg-gray-900/50 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50">
+      <footer className="mt-16 bg-card/50 backdrop-blur-md border-t border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-sm text-muted-foreground">
               © 2025 AI Content Studio - Grammar correction & social content
               generation
             </div>
-            <div className="flex items-center justify-center md:justify-start space-x-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-center md:justify-start space-x-2 text-sm text-muted-foreground">
               <span>Powered by</span>
               <div className="flex items-center space-x-1">
-                <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-sm"></div>
+                <div className="w-4 h-4 bg-primary rounded-sm"></div>
                 <span className="font-medium">Gemini Flash</span>
               </div>
             </div>
