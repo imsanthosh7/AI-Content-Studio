@@ -1,21 +1,58 @@
 import React from "react";
-import Nav from "@/components/Nav";
+import Nav from '@/components/Nav'
 
 const LandingPage: React.FC = () => {
+
+ 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-   
-   {/* Hero Section */}
-      <main className="relative z-10 flex items-center justify-center min-h-screen px-6">
-        <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center px-4 py-2 bg-purple-50 rounded-full border border-purple-200 mb-8">
-            <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+    <div className=" bg-white relative overflow-hidden">
+      <Nav/>
+      {/* Hero Section */}
+      <main className="relative z-10 flex items-center justify-center min-h-screen px-2 md:px-6">
+        {/* Background gradients */}
+        <div
+          className="absolute  inset-0 z-0"
+          style={{
+            backgroundImage: `
+        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+      `,
+            backgroundSize: "20px 30px",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 70% 60% at 50% 100%, #000 60%, transparent 100%)",
+            maskImage:
+              "radial-gradient(ellipse 70% 60% at 50% 100%, #000 60%, transparent 100%)",
+          }}
+        />
+
+        {/* Hero Content */}
+        <div className="text-center max-w-4xl mx-auto relative -mt-24 z-10">
+          <div className="inline-flex justify-between gap-1 items-center px-4 py-2 bg-purple-50 rounded-full border border-purple-200 mb-8">
+            <span className="">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-sparkles-icon lucide-sparkles text-purple-700"
+              >
+                <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+                <path d="M20 2v4" />
+                <path d="M22 4h-4" />
+                <circle cx="4" cy="20" r="2" />
+              </svg>
+            </span>
             <span className="text-purple-700 font-medium text-sm">
-              Now with AI-powered suggestions
+              AI-powered suggestions
             </span>
           </div>
 
-          <h1 className="text-6xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
             AI Content Studio{" "}
             <span className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
               Create Smarter, Faster
@@ -29,29 +66,11 @@ const LandingPage: React.FC = () => {
 
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-lg">
-              Get Started Free
-            </button>
-            <button className="px-8 py-4 bg-white text-gray-900 rounded-full font-semibold border-2 border-gray-200 hover:border-gray-300 transition-colors text-lg">
-              Watch Demo
+              Get Started
             </button>
           </div>
         </div>
       </main>
-
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-32 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-      </div>
-
-      {/* Grid Pattern */}
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
     </div>
   );
 };

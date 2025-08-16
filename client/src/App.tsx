@@ -16,9 +16,6 @@ function App() {
       <TooltipProvider>
         <Toaster />
 
-        {/* Navbar with built-in auth */}
-        <Nav />
-
         {/* Routing */}
         <div className="">
           <Route path="/" component={LandingPage} />
